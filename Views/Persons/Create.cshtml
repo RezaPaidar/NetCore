@@ -1,0 +1,101 @@
+﻿@model PersonAddRequest
+
+@{
+    ViewBag.Title = "Create Person";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="~/persons/index" class="link-info">Back to Persons List</a>
+        <h1>Create Persons</h1>
+
+        <form action="~/persons/create" method="post">
+            <div class="card">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 mb-1">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" asp-for="PersonName">Person Name</label>
+                                        <input class="form-control" asp-for="PersonName" placeholder="Person Name" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" asp-for="Email">Email</label>
+                                        <input asp-for="Email" placeholder="Email" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" asp-for="DateOfBirth">Date Of Birth</label>
+                                        <input asp-for="DateOfBirth" class="form-control" placeholder="Date Of Birth" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label class="form-label">Gender </label>
+                                    <div class="mb-3 mt-2">
+                                        @{
+                                            string[] genders = Enum.GetNames(typeof(GenderOptions));
+                                        }
+                                        @foreach (string gender in genders)
+                                        {
+                                            <label class="form-check-label" for="@gender">@gender</label>
+                                            <input class="form-check-input" asp-for="Gender" type="radio" value="@gender" />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="CountryID">Country</label>
+                                        <select asp-for="CountryID" class="form-control">
+                                            <option value="0">Select One Please</option>
+                                            @foreach (CountryResponse country in ViewBag.Countries)
+                                            {
+                                                <option value="@country.CountryId">@country.CountryName</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label class="form-label">Receive News Letters </label>
+                                    <div class="mb-3 mt-2">
+                                        <label class="form-check-label" for="ReceiveNewsLetters">Yes, I'm In</label>
+                                        <input class="form-check-input" asp-for="ReceiveNewsLetters" type="checkbox" value="true" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="Address">Address</label>
+                                        <textarea class="form-control" asp-for="Address" placeholder="Address"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="mb-3">
+                                        <button class="btn btn-outline-primary">Save a new Pesron</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="mb-3">
+                                        @if (ViewBag.Errors != null)
+                                        {
+                                            <div class="text-danger">
+                                                <ul>
+                                                    @foreach (string err in ViewBag.Errors)
+                                                    {
+                                                        <li class="ms-1">@err</li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div> 

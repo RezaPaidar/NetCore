@@ -1,0 +1,98 @@
+﻿@model IEnumerable<PersonResponse>
+@{
+    ViewBag.Title = "Persons";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Persons</h1>
+        <a asp-controller="persons" asp-action="create" class="link-info">Create Person</a>
+        <form asp-controller="persons" asp-action="Index" method="post">
+            <div class="card">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 mb-1">
+                            <label></label>
+                            <select class="form-select" name="searchBy">
+                                @foreach (var field in ViewBag.searchFields)
+                                {
+                                    if (field.Key == ViewBag.CurrentSearchBy)
+                                    {
+                                        <option value="@field.Key" selected="selected">@field.Value</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@field.Key">@field.Value</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-12 col-sm-12 mb-1">
+                            <label for="search"></label>
+                            <input id="search" type="search" class="form-control" placeholder="search your term" name="searchString" value="@ViewBag.CurrentSearchString" />
+                        </div>
+                        <div class="col-md-12 col-sm-12 mb-1">
+                            <button class="btn btn-primary">Search</button>
+                            <a asp-action="Index" asp-controller="persons" class="link-info">Clear All</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <table class="table table-hover mt-1">
+                <thead>
+                    <tr>
+                        @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData){
+                        {"ColumnName", nameof(PersonResponse.PersonName)},
+                        {"DisplayName", "Person Name"}
+                        })
+                        @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData){
+                        {"ColumnName", nameof(PersonResponse.Email)},
+                        {"DisplayName", "Email"}
+                        })
+                        @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData){
+                        {"ColumnName", nameof(PersonResponse.DateOfBirth)},
+                        {"DisplayName", "Date Of Birth"}
+                        })
+                         @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData){
+                        {"ColumnName", nameof(PersonResponse.Age)},
+                        {"DisplayName", "Age"}
+                        })
+                         @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData){
+                        {"ColumnName", nameof(PersonResponse.Gender)},
+                        {"DisplayName", "Gender"}
+                        })
+                        @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData){
+                        {"ColumnName", nameof(PersonResponse.Country)},
+                        {"DisplayName", "Country"}
+                        })
+                        @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData){
+                        {"ColumnName", nameof(PersonResponse.Address)},
+                        {"DisplayName", "Address"}
+                        })
+                        @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData){
+                        {"ColumnName", nameof(PersonResponse.ReceiveNewsLetters)},
+                        {"DisplayName", "Receive News Letters"}
+                        })
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (PersonResponse person in Model)
+                    {
+                        <tr>
+                            <td>@person.PersonName</td>
+                            <td>@person.Email</td>
+                            <td>@person.DateOfBirth?.ToString("yyyy-mm-dd")</td>
+                            <td>@person.Age</td>
+                            <td>@person.Gender</td>
+                            <td>@person.Country</td>
+                            <td>@person.Address</td>
+                            <td>@person.ReceiveNewsLetters</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
